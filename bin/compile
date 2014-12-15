@@ -18,19 +18,23 @@ function indent() {
 cd $BUILD_DIR
 
 for f in `cat tarballs`; do
-  tar vxfz $f.tar.gz
-  cd $f
-  if [ -f configure ]; then
-    echo "-----> Configuring $f"
-    ./configure --prefix=$1 2>&1 | indent
-  fi
+  if [ -d $f ]; then
+    echo "-----> Using cached version of $f"
+  else
+    tar vxfz $f.tar.gz
+    cd $f
+    if [ -f configure ]; then
+      echo "-----> Configuring $f"
+      ./configure --prefix=$1 2>&1 | indent
+    fi
 
-  if [ -f Makefile ]; then
-    echo "-----> Making $f"
-    make 2>&1 | indent
-    make install 2>&1 | indent
+    if [ -f Makefile ]; then
+      echo "-----> Making $f"
+      make 2>&1 | indent
+      make install 2>&1 | indent
+    fi
+    cd ..
   fi
-  cd ..
 done
 
 # configure
