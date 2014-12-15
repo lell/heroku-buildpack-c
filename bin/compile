@@ -15,8 +15,8 @@ function indent() {
   esac
 }
 
+cd $BUILD_DIR
 for f in `cat tarballs`; do
-  cd $BUILD_DIR
   if [ -d $CACHE_DIR/$f ]; then
     echo "-----> Using cached version of $f"
     cd $CACHE_DIR/$f
@@ -35,9 +35,9 @@ for f in `cat tarballs`; do
       make install 2>&1 | indent
     fi
   fi
+  cd $BUILD_DIR
 done
 
-cd $BUILD_DIR
 # configure
 if [ -f configure ]; then
   echo "-----> Configuring"
