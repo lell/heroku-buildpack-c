@@ -22,7 +22,7 @@ for f in `cat tarballs`; do
     cd $CACHE_DIR/$f
     make install 2>&1 | indent
   else
-    tar -C $CACHE_DIR -vxzf $f.tar.gz 
+    tar -C $CACHE_DIR -vxzf src/$f.tar.gz 
     cd $CACHE_DIR/$f
     if [ -f configure ]; then
       echo "-----> Configuring $f"
