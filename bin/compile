@@ -17,6 +17,10 @@ function indent() {
 
 cd $BUILD_DIR
 
+for f in *.tar.gz; do
+  tar vxfz $f | indent
+done
+
 # configure
 if [ -f configure ]; then
   echo "-----> Configuring"
