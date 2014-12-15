@@ -37,7 +37,7 @@ for f in `cat $BUILD_DIR/tarballs`; do
 done
 
 cd $CACHE_DIR
-cp -r !(src) $BUILD_DIR
+rsync -av --progress . $BUILD_DIR --exclude src
 
 cd $BUILD_DIR
 # configure
