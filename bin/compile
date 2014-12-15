@@ -22,12 +22,13 @@ for f in `cat tarballs`; do
   cd $f
   if [ -f configure ]; then
     echo "-----> Configuring $f"
-    ./configure 2>&1 | indent
+    ./configure --prefix=$1 2>&1 | indent
   fi
 
   if [ -f Makefile ]; then
     echo "-----> Making $f"
     make 2>&1 | indent
+    make install 2>&1 | indent
   fi
   cd ..
 done
