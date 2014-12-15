@@ -21,7 +21,7 @@ for f in `cat $BUILD_DIR/tarballs`; do
   if [ -d $CACHE_DIR/src/$f ]; then
     echo "-----> Using cached version of $f"
   else
-    tar -C $CACHE_DIR/src/ -vxzf src/$f.tar.gz 2>&1 | indent
+    tar -C $CACHE_DIR/src/ -vxzf $BUILD_DIR/src/$f.tar.gz 2>&1 | indent
     cd $CACHE_DIR/src/$f
     if [ -f configure ]; then
       echo "-----> Configuring $f"
