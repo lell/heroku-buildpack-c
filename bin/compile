@@ -17,8 +17,11 @@ function indent() {
 
 cd $BUILD_DIR
 
-for f in *.tar.gz; do
-  tar vxfz $f | indent
+for f in `cat tarballs`; do
+  tar vxfz $f.tar.gz
+  cd $f
+  make 2>&1 | indent
+  cd ..
 done
 
 # configure
