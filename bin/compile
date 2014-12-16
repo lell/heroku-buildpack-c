@@ -20,10 +20,6 @@ function indent() {
   esac
 }
 
-echo "-----> Setting environment"
-mkdir -p $ENV_DIR
-echo "/app/lib" > $ENV_DIR/LD_LIBRARY_PATH
-
 for f in `cat $BUILD_DIR/tarballs`; do
   if [ -d $CACHE_DIR/src/$f ]; then
     echo "-----> Using cached version of $f"
