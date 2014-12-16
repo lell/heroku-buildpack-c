@@ -6,6 +6,7 @@ set -o pipefail
 
 BUILD_DIR=$1
 CACHE_DIR=$2
+HOME=$HOME
 mkdir -p $CACHE_DIR
 mkdir -p $CACHE_DIR/src
 
@@ -20,12 +21,14 @@ function indent() {
 for f in `cat $BUILD_DIR/tarballs`; do
   if [ -d $CACHE_DIR/src/$f ]; then
     echo "-----> Using cached version of $f"
+    cd $CACHE_DIR/src/$f
+    make install 2>&1 | indent
   else
     tar -C $CACHE_DIR/src/ -vxzf $BUILD_DIR/src/$f.tar.gz 2>&1 | indent
     cd $CACHE_DIR/src/$f
     if [ -f configure ]; then
       echo "-----> Configuring $f"
-      ./configure --prefix=$CACHE_DIR 2>&1 | indent
+      ./configure --prefix=$HOME 2>&1 | indent
     fi
 
     if [ -f Makefile ]; then
@@ -36,8 +39,8 @@ for f in `cat $BUILD_DIR/tarballs`; do
   fi
 done
 
-cd $CACHE_DIR
-rsync -av --progress . $BUILD_DIR --exclude src
+#cd $CACHE_DIR
+#rsync -av --progress . $BUILD_DIR --exclude src
 
 cd $BUILD_DIR
 # configure
@@ -49,3 +52,4 @@ fi
 # make
 echo "-----> Making"
 make 2>&1 | indent
+cp main $HOME
