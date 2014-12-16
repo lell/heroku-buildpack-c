@@ -19,11 +19,11 @@ function indent() {
 }
 
 for f in `cat $BUILD_DIR/tarballs`; do
-  #if [ -d $CACHE_DIR/src/$f ]; then
-  #  echo "-----> Using cached version of $f"
-  #  cd $CACHE_DIR/src/$f
-  #  make install 2>&1 | indent
-  #else
+  if [ -d $CACHE_DIR/src/$f ]; then
+    echo "-----> Using cached version of $f"
+    #cd $CACHE_DIR/src/$f
+    #make install 2>&1 | indent
+  else
     tar -C $CACHE_DIR/src/ -vxzf $BUILD_DIR/src/$f.tar.gz 2>&1 | indent
     cd $CACHE_DIR/src/$f
     if [ -f configure ]; then
@@ -36,11 +36,11 @@ for f in `cat $BUILD_DIR/tarballs`; do
       make 2>&1 | indent
       make install 2>&1 | indent
     fi
-  #fi
+  fi
 done
 
-cd $CACHE_DIR
-rsync -av --progress . $BUILD_DIR --exclude src
+#cd $CACHE_DIR
+#rsync -av --progress . $BUILD_DIR --exclude src
 
 cd $BUILD_DIR
 # configure
