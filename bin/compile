@@ -28,7 +28,7 @@ for f in `cat $BUILD_DIR/tarballs`; do
     cd $CACHE_DIR/src/$f
     if [ -f configure ]; then
       echo "-----> Configuring $f"
-      ./configure --prefix=$HOME 2>&1 | indent
+      ./configure --prefix=$BUILD_DIR 2>&1 | indent
     fi
 
     if [ -f Makefile ]; then
@@ -39,8 +39,8 @@ for f in `cat $BUILD_DIR/tarballs`; do
   #fi
 done
 
-#cd $CACHE_DIR
-#rsync -av --progress . $BUILD_DIR --exclude src
+cd $CACHE_DIR
+rsync -av --progress . $BUILD_DIR --exclude src
 
 cd $BUILD_DIR
 # configure
@@ -52,4 +52,3 @@ fi
 # make
 echo "-----> Making"
 make 2>&1 | indent
-cp main $HOME
