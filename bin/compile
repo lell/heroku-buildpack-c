@@ -40,7 +40,11 @@ for f in `cat $BUILD_DIR/tarballs`; do
       make install 2>&1 | indent
     fi
 
-    find {bin,etc,include,lib,share} | cpio -pudm $BUILD_DIR
+    for f in bin etc include lib share; do
+      if [ -d $f ]; then
+        find $f | cpio -pudm $BUILD_DIR
+      fi
+    done
   fi
 done
 
