@@ -40,7 +40,7 @@ for f in `cat $BUILD_DIR/tarballs`; do
       make install 2>&1 | indent
     fi
 
-    for f in bin etc include lib share; do
+    for f in bin etc include lib lib64 libexec share; do
       if [ -d $f ]; then
         find $f | cpio -pudm $BUILD_DIR
       fi
